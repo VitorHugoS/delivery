@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: delivery
+        psr4_prefix: delivery
+        src_path: app

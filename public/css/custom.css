@@ -1,0 +1,60 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+.topocor{
+	background-color: #a71717;
+	border: none;
+}
+.logo{
+	max-height: 100px;
+}
+.rodape{
+	position: fixed;
+	bottom: 0;
+	background-color: #a71717;
+	width: 100%;
+}
+.copyright{
+	padding-top: 10px;
+	color: #fff;
+	text-align: center;
+}
+.copyright a{
+	color: #fff;
+}
+.box-shadow(@shadow: 0 1px 3px rgba(0,0,0,.25)) {
+  -webkit-box-shadow: @shadow;
+          box-shadow: @shadow;
+}
+.categorias{
+	background-color: #a29a9a;
+	color: #fff;
+	text-align: center;
+}
+.icon{
+	width: 50px;
+}
+.iconPizza{
+	width: 250px;
+}
+.linkCategorias{
+	cursor: pointer;
+	text-decoration: none;
+	color: #fff;
+}
+.linkCategorias:hover{
+	text-decoration: none;
+	color: #fff;
+}
+.linkPizzas{
+	cursor: pointer;
+	text-decoration: none;
+	color: #000;
+}
+.linkPizzas:hover{
+	text-decoration: none;
+	color: #000;
+}
+.pizzaLista{
+	background: #000;
+}
