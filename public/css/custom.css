@@ -58,3 +58,21 @@ body {
 .pizzaLista{
 	background: #000;
 }
+.pagamento-disabled{
+	background-color: #cecece!important;
+	color: #fff;
+	cursor: pointer;
+}
+.pagamento-active{
+	background-color: #5CA041!important;
+	color: #fff;
+	cursor: pointer;
+}
+.enviado{
+	background-color: #5CA041!important;
+	color: #fff;
+	text-align: center;
+	border-radius: 5px;
+	padding: 30px;
+	margin-top: 50px;
+}

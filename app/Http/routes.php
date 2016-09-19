@@ -14,13 +14,10 @@
 Route::any('/', 'WelcomeController@index');
 Route::get('/pizzas', 'WelcomeController@index');
 Route::get('/pizza/{item}', 'WelcomeController@pizza');
-
+Route::any('/fecharPedido', 'WelcomeController@fecharPedido');
 Route::any('/pedir', 'WelcomeController@resumo');
-Route::get('/finalizar', function(){
-	return "pedido!";
-});
+Route::get('/finalizar', 'WelcomeController@finalizar');
 Route::get('/carrinho', 'WelcomeController@carrinho');
-
 Route::get('home', 'HomeController@index');
 
 Route::controllers([

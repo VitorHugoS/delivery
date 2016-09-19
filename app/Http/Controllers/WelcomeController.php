@@ -5,6 +5,8 @@ use delivery\Pizzas;
 use delivery\Ingredientes;
 use delivery\pizza_Composta;
 use delivery\Carrinho;
+use delivery\Pedido;
+use delivery\itensPedido;
 use Request;
 use Auth;
 
@@ -64,6 +66,37 @@ class WelcomeController extends Controller {
 		return redirect()->action("WelcomeController@carrinho");
 	}
 
+	public function fecharPedido()
+	{
+		if (Request::isMethod('post'))
+		{ 
+			//cria registro do pedido
+			$idPedido = Pedido::firstOrCreate(["entrega"=> Request::input("endereco", NULL), "idCliente"=> Auth::user()->id,"pagamento"=> Request::input("forma", NULL), "troco" => 0, "status" => 0 ]);
+			//cria os itens do pedido
+			$itensCarrinho = Carrinho::where("id_usuario", Auth::user()->id)->get();
+			//apaga os registro do carrinho
+			$apagaCarrinho = Carrinho::where("id_usuario", Auth::user()->id)->delete();
+			//insere itens no pedido
+			foreach ($itensCarrinho as $value) {
+				itensPedido::firstOrCreate(["idPedido" => $idPedido->id, "idProduto" => $value->id_pizza, "quantidade" => 1]);
+			}
+			$dados = array(
+				"Titulo" => "Pedido Enviado!"
+			);
+			//retorno de sucesso
+			return view("pedido.enviado")->with($dados);
+		}
+		return redirect()->action("WelcomeController@index");
+	}
+
+	public function enviado(){
+			$dados = array(
+				"Titulo" => "Pedido Enviado!"
+			);
+			//retorno de sucesso
+			return view("pedido.enviado")->with($dados);	
+	}
+
 	public function carrinho()
 	{
 		//retorna o carrinho atual do usuario
@@ -75,5 +108,26 @@ class WelcomeController extends Controller {
 			"Carrinho" => $dadosCarrinho
 		);
 		return view("pedido.pedido")->with($dados);
+	}
+
+	public function finalizar()
+	{
+		//total do carrinho
+		$total = 0;
+		//retorna o carrinho atual do usuario
+		//$dadosCarrinho = Carrinho::where("id_usuario", Auth::user()->id)->get();
+		$dadosCarrinho = DB::table('carrinho')->leftJoin('pizzas', 'carrinho.id_pizza', '=', 'pizzas.id')
+            ->where("carrinho.id_usuario", Auth::user()->id)->get();
+        
+        foreach ($dadosCarrinho as $value) {
+        	$total = $total + $value->preco;
+        }
+
+		$dados = array(
+			"Titulo" => "Resumo",
+			"Carrinho" => $dadosCarrinho,
+			"Total" => $total
+		);
+		return view("pedido.finalizar")->with($dados);
 	}
 }
